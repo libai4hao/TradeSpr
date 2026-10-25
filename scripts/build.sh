@@ -42,7 +42,10 @@ fi
 # 4. 私有静态资源 → dist/output_static/（排除代码文件）
 if [ -d "$ROOT/shared/static" ]; then
   mkdir -p "$OUTPUT_STATIC"
-  rsync -a --exclude='*.ts' --exclude='*.tsx' --exclude='*.js' --exclude='*.jsx' "$ROOT/shared/static/" "$OUTPUT_STATIC/"
+  # 先用 cp 复制所有文件
+  cp -R "$ROOT/shared/static/." "$OUTPUT_STATIC/"
+  # 再删除不需要的源码文件
+  find "$OUTPUT_STATIC" -type f \( -name '*.ts' -o -name '*.tsx' -o -name '*.js' -o -name '*.jsx' \) -delete
 fi
 
 # 5. capability 配置 → dist/output_capabilities/
