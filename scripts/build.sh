@@ -10,7 +10,8 @@ OUTPUT_STATIC="$ROOT/dist/output_static"
 #   MIAODA_APP_ID            → /app/<appId> 作为客户端 base path
 #   MIAODA_RESOURCE_CDN_PREFIX → assets (JS/CSS) 的 CDN 前缀
 # CLI 注入约定见 miaoda-cli src/services/deploy/modern/atoms/build.ts
-export CLIENT_BASE_PATH="${MIAODA_APP_ID:+/app/$MIAODA_APP_ID}"
+# export CLIENT_BASE_PATH="${MIAODA_APP_ID:+/app/$MIAODA_APP_ID}"
+export CLIENT_BASE_PATH="/"
 export ASSETS_CDN_PATH="${MIAODA_RESOURCE_CDN_PREFIX:-/}"
 export STATIC_ASSETS_BASE_URL="${MIAODA_STATIC_CDN_PREFIX}"
 export NODE_ENV="${NODE_ENV:-production}"
