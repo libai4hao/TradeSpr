@@ -1,3 +1,16 @@
+# 快速开始
+
+```shell
+
+yarn install
+# 启动服务
+yarn dev
+```
+
+本地验证
+
+http://localhost:18001/
+
 # 项目技术规范
 
 ## 技术栈
@@ -49,23 +62,25 @@ shared/
 
 ## 禁止修改的文件
 
-| 文件 | 原因 |
-|------|------|
-| `src/index.tsx` | Provider 层级 + 样式引入，由模板管理 |
-| `src/components/ui/*` | shadcn/ui 内置组件，版本锁定 |
+
+| 文件                  | 原因                                 |
+| --------------------- | ------------------------------------ |
+| `src/index.tsx`       | Provider 层级 + 样式引入，由模板管理 |
+| `src/components/ui/*` | shadcn/ui 内置组件，版本锁定         |
 
 ---
 
 ## 文件放置规则
 
-| 内容类型 | 放置位置 |
-|---------|---------|
-| 新页面 | `src/pages/<PageName>/PageName.tsx` |
-| 页面专属组件 | `src/pages/<PageName>/components/` |
-| 自定义 Hooks | `src/hooks/` |
-| 工具函数 | `src/lib/` |
-| 静态数据文件 | `shared/static/data/` |
-| 静态图片 | `shared/static/images/` |
+
+| 内容类型     | 放置位置                            |
+| ------------ | ----------------------------------- |
+| 新页面       | `src/pages/<PageName>/PageName.tsx` |
+| 页面专属组件 | `src/pages/<PageName>/components/`  |
+| 自定义 Hooks | `src/hooks/`                        |
+| 工具函数     | `src/lib/`                          |
+| 静态数据文件 | `shared/static/data/`               |
+| 静态图片     | `shared/static/images/`             |
 
 ---
 
@@ -94,16 +109,17 @@ import configData from "@shared/static/config.json";
 
 主题色定义在 `src/index.css`，通过 `:root` CSS 变量 + `@theme inline` 注册到 Tailwind。
 
-| 用途 | Tailwind 类 | CSS 变量 |
-|------|------------|----------|
-| 页面背景 | `bg-background` | `--background` |
-| 主文本 | `text-foreground` | `--foreground` |
-| 卡片背景 | `bg-card` | `--card` |
-| 次要文本 | `text-muted-foreground` | `--muted-foreground` |
-| 主色 | `bg-primary` / `text-primary` | `--primary` |
-| 强调色 | `bg-accent` | `--accent` |
-| 边框 | `border-border` | `--border` |
-| 危险色 | `text-destructive` | `--destructive` |
-| 图表色 | `bg-chart-1` ~ `bg-chart-5` | `--chart-1` ~ `--chart-5` |
+
+| 用途     | Tailwind 类                   | CSS 变量                  |
+| -------- | ----------------------------- | ------------------------- |
+| 页面背景 | `bg-background`               | `--background`            |
+| 主文本   | `text-foreground`             | `--foreground`            |
+| 卡片背景 | `bg-card`                     | `--card`                  |
+| 次要文本 | `text-muted-foreground`       | `--muted-foreground`      |
+| 主色     | `bg-primary` / `text-primary` | `--primary`               |
+| 强调色   | `bg-accent`                   | `--accent`                |
+| 边框     | `border-border`               | `--border`                |
+| 危险色   | `text-destructive`            | `--destructive`           |
+| 图表色   | `bg-chart-1` ~ `bg-chart-5`   | `--chart-1` ~ `--chart-5` |
 
 HSL 格式使用**空格分隔**：`--primary: hsl(150 60% 40%);`
