@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>股真人 - 轻量数据查询工具站</title>
+    <link href="https://lf3-static.bytednsdoc.com/obj/eden-cn/ylcylz_fsph_ryhs/ljhwZthlaukjlkulzlp/feisuda/feisuda.svg" rel="shortcut icon"/>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/index.tsx"></script>
+  </body>
+  <script>
+console.log('初始title:',document.title);
+// 监听title被修改
+Object.defineProperty(document,'title',{
+  set(v){
+    console.warn('title被修改为',v,new Error().stack);
+    return true;
+  },
+  get(){return Reflect.get(document,'title')}
+})
+</script>
+
+</html>
