@@ -1,11 +1,34 @@
 # 快速开始
 
 ```shell
+# 1. 安装依赖（用 bun，速度快）
+bun install
 
-yarn install
-# 启动服务
-yarn dev
+# 2. 启动开发服务器
+bun run dev
+
+# 普通构建（走 scripts/build.sh）
+bun run build
+
+# 飞书/多维表格 APAAS 环境
+bun run build:lark
+
+# 独立部署版本
+bun run build:standalone
 ```
+
+
+
+一条龙命令
+
+```shell
+# 本地开发
+bun install && bun run dev
+
+# 本地测生产包
+bun run build && cd dist/output && bunx serve .
+```
+
 
 本地验证
 
