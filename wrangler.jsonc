@@ -1,0 +1,5 @@
+{
+  "name": "tradespr",          // 必须和 CF 项目名一致
+  "pages_build_output_dir": "./dist/output",
+  "compatibility_date": "2026-10-22"
+}
