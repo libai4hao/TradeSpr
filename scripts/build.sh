@@ -38,6 +38,10 @@ if [ -d "$ROOT/dist/client/assets" ]; then
   mkdir -p "$OUTPUT_RESOURCE"
   cp -r "$ROOT/dist/client/assets" "$OUTPUT_RESOURCE/"
 fi
+# 新增：将 resources 也复制到 output，实现同源访问
+if [ -d "$OUTPUT_RESOURCE" ]; then
+  cp -r "$OUTPUT_RESOURCE/." "$OUTPUT/"
+fi
 
 # 4. 私有静态资源 → dist/output_static/（排除代码文件）
 if [ -d "$ROOT/shared/static" ]; then
