@@ -52,7 +52,7 @@ temp/
 .playwright-cli/
 
 # Lock files (keep package-lock.json for consistent installs)
-yarn.lock
+
 pnpm-lock.yaml
 
 # Cache files
