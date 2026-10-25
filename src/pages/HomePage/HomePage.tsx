@@ -17,7 +17,6 @@ import {
   Globe,
   FastForward,
 } from 'lucide-react';
-import { logger } from '@lark-apaas/client-toolkit-lite';
 import { Button } from '@/components/ui/button';
 import {
   Select,
@@ -35,6 +34,13 @@ import ForexTradingSection from './sections/ForexTradingSection';
 import { generateMockWeather, type IWeather } from '@/data/weather';
 import { TIMELINES } from '@/data/forex-trading';
 
+const logger = {
+  debug: (...args: unknown[]) => console.debug('[app]', ...args),
+  info: (...args: unknown[]) => console.info('[app]', ...args),
+  warn: (...args: unknown[]) => console.warn('[app]', ...args),
+  error: (...args: unknown[]) => console.error('[app]', ...args),
+  log: (...args: unknown[]) => console.log('[app]', ...args),
+}
 function formatTime(date: Date) {
   const pad = (n: number) => n.toString().padStart(2, '0');
   return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
