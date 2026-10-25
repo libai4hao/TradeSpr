@@ -9,6 +9,7 @@ const siteMeta = {
 }
 
 export default defineConfig({
+  base: '/',  // ✔ 显式覆盖预设默认的
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
