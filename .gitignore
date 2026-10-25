@@ -9,7 +9,8 @@ build/
 */build/
 
 # Environment files
-
+# .env 含真实密钥，绝不入库；新人从 .env.example 复制
+.env
 .env.local
 .env.*.local
 

@@ -1,3 +1,7 @@
+// ⚠️ 此文件只影响 `wrangler` 命令（含 Workers Builds 的 deploy 命令）。
+// Cloudflare Pages 的 Git 集成【不读】这个文件，它的输出目录是在
+// Pages 项目 Settings → Build → Build output directory 里配的（本仓库填 dist/output）。
+// 保留它是为了本地 `wrangler pages deploy` 仍可用；改这里不会改变 Pages Git 集成的行为。
 {
   "name": "tradespr",          // 必须和 CF 项目名一致
   "pages_build_output_dir": "./dist/output",
