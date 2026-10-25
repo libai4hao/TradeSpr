@@ -20,7 +20,7 @@ export NODE_ENV="${NODE_ENV:-production}"
 rm -rf "$ROOT/dist"
 
 # 1. Vite 构建 → dist/client/（相对于项目根目录输出）
-npx vite build --outDir "$ROOT/dist/client" --emptyOutDir
+bun x vite build --outDir "$ROOT/dist/client" --emptyOutDir
 
 # 2. public/ 静态资源 + HTML → dist/output/（模型 B：public = 应用根目录，同源 /app/<appId>/*）
 mkdir -p "$OUTPUT"
@@ -61,6 +61,42 @@ fi
 
 # 清理中间产物
 rm -rf "$ROOT/dist/client"
+
+# 6. 替换脚手架模板占位符（跨平台 Node 脚本）
+echo "→ 替换模板占位符"
+node -e '
+const fs = require("fs");
+const path = require("path");
+const dir = path.resolve("dist/output");
+const rules = [
+  [/\{\{basename\}\}/g, "/"],
+  [/\{\{appId\}\}/g, ""],
+  [/\{\{resourceCdnPrefix\}\}/g, "/"],
+  [/\{\{staticAssetsBaseUrl\}\}/g, ""],
+  [/\{\{API_BASE\}\}/gi, ""]
+];
+function walk(d){
+  for (const f of fs.readdirSync(d)) {
+    const p = path.join(d, f);
+    if (fs.statSync(p).isDirectory()) { walk(p); continue; }
+    if (/\.(html|js|json|css|mjs)$/.test(f)) {
+      let s = fs.readFileSync(p, "utf8");
+      let changed = false;
+      for (const [re, val] of rules) {
+        if (re.test(s)) { s = s.replace(re, val); changed = true; }
+      }
+      // 兜底：任何残留的 {{xxx}} 全部清空
+      if (/\{\{[^}]+\}\}/.test(s)) {
+        s = s.replace(/\{\{[^}]+\}\}/g, "");
+        changed = true;
+      }
+      if (changed) fs.writeFileSync(p, s);
+    }
+  }
+}
+walk(dir);
+console.log("✅ 占位符替换完成");
+'
 
 echo "Build complete"
 echo "  HTML         → dist/output/"
