@@ -25,7 +25,7 @@ import AnimatedNumber from '@/components/AnimatedNumber';
 import { WeatherSkeleton } from '@/components/Skeleton';
 import { getWeatherData, type IWeather, type IWeatherForecast } from '@/services/weather';
 import { getWeatherConfig } from '@/config/weather';
-
+import { generateMockWeather} from '@/data/weather'
 const WEATHER_ICONS: Record<IWeather['condition'], typeof Sun> = {
   晴: Sun,
   多云: Cloud,
@@ -91,7 +91,6 @@ export default function WeatherSection({
     } catch (e) {
       console.error('[WeatherSection] 获取天气数据失败', e);
       // 兜底：直接生成 mock 数据，确保页面可用
-      const { generateMockWeather } = await import('@/data/weather');
       const mockData = generateMockWeather(targetCity, key);
       setWeatherData({
         weather: mockData.weather,
