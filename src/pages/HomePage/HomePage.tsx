@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   RefreshCw,
@@ -29,10 +29,12 @@ import { Badge } from '@/components/ui/badge';
 import WeatherSection from './sections/WeatherSection';
 import WeatherAlertSection from './sections/WeatherAlertSection';
 import ExchangeSection from './sections/ExchangeSection';
-import GoldSection from './sections/GoldSection';
-import ForexTradingSection from './sections/ForexTradingSection';
+
 import { generateMockWeather, type IWeather } from '@/data/weather';
 import { TIMELINES } from '@/data/forex-trading';
+
+const GoldSection = lazy(() => import('./sections/GoldSection'));
+const ForexTradingSection = lazy(() => import('./sections/ForexTradingSection'));
 
 const logger = {
   debug: (...args: unknown[]) => console.debug('[app]', ...args),
@@ -111,7 +113,7 @@ const TIME_MACHINE_NODES = [
   { id: 'y10y', label: '10 年前', offsetDays: -10 * 365, group: '历史深处' },
   { id: 'y2020', label: '2020 年', offsetHours: -(2024 - 2020) * 365 * 24, group: '历史深处' },
   { id: 'y2015', label: '2015 年', offsetHours: -(2024 - 2015) * 365 * 24, group: '历史深处' },
-  { id: 'y2015', label: '2012 年', offsetHours: -(2024 - 2012) * 365 * 24, group: '历史深处' },
+  { id: 'y2012', label: '2012 年', offsetHours: -(2024 - 2012) * 365 * 24, group: '历史深处' },
   { id: 'y2010', label: '2010 年', offsetHours: -(2024 - 2010) * 365 * 24, group: '历史深处' },
   { id: 'y2006', label: '2006 年', offsetHours: -(2024 - 2006) * 365 * 24, group: '历史深处' },
 ];
@@ -364,7 +366,7 @@ export default function HomePage() {
     <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-info/5">
       {/* 顶部 Header */}
       <header className="sticky top-0 z-50 w-full bg-background/70 backdrop-blur-md border-b border-border/30">
-        <div className="max-w-5xl mx-auto px-4 md:px-6 flex h-16 items-center justify-between">
+        <div className="max-w-5xl xl:max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 md:px-6 flex h-16 items-center justify-between">
           <motion.div
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
@@ -384,7 +386,7 @@ export default function HomePage() {
 
       {/* Tab 导航 */}
       <nav className="sticky top-16 z-40 w-full bg-background/70 backdrop-blur-md border-b border-border/30">
-        <div className="max-w-5xl mx-auto px-4 md:px-6">
+        <div className="max-w-5xl xl:max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 md:px-6">
           <div className="flex items-center gap-1 py-2 overflow-x-auto scrollbar-hide">
             {TABS.map((tab) => {
               const Icon = tab.icon;
@@ -409,7 +411,8 @@ export default function HomePage() {
       </nav>
 
       {/* 主内容区 */}
-      <main className="max-w-5xl mx-auto px-4 md:px-6 py-6 md:py-8">
+      <main className="max-w-5xl xl:max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 md:px-6 py-6 md:py-8">
+       
         {/* 天气提醒横幅（只在天气 tab 且有提醒时显示） */}
         {activeTab === 'weather' && showAlert && (
           <motion.div
@@ -433,6 +436,13 @@ export default function HomePage() {
 
         {/* Tab 内容区 */}
         <AnimatePresence mode="wait">
+          <Suspense
+            fallback={
+              <div className="py-10 text-center text-sm text-muted-foreground">
+                加载中...
+              </div>
+            }
+          >
           <motion.div
             key={activeTab}
             initial={{ opacity: 0, y: 8 }}
@@ -473,8 +483,6 @@ export default function HomePage() {
                   <div className="text-sm tabular-nums font-semibold ml-1">
                     {formatDateTimeFull(simTime)}
                   </div>
-
-                  <br/>
 
                   <div className="ml-auto flex items-center gap-3">
                     <div className="flex items-center gap-1.5">
@@ -623,8 +631,10 @@ export default function HomePage() {
                   onSkipToEnd={handleSkipToEnd}
                 />
               </div>
-            )}
+            )
+          }
           </motion.div>
+        </Suspense>
         </AnimatePresence>
 
         {/* Footer */}
